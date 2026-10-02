@@ -104,7 +104,7 @@ function vscore(v){var n=(v.name||'');return /natural|online/i.test(n)?3:(/googl
 function vlabel(v){var n=(v.name||'').replace(/^Microsoft\s+/,'').replace(/Online\s*\(Natural\)/i,'Natural');
   return (vscore(v)>=2?'★ ':'')+n+(FEM.test(v.name)?' · F':(MAL.test(v.name)?' · M':''))}
 function fillVoices(){
-  VOICES=(SPK.getVoices()||[]).filter(function(v){return /^ko/i.test(v.lang)});
+  VOICES=(SPK.getVoices()||[]).filter(function(v){return /^en/i.test(v.lang)});
   VOICES.sort(function(a,b){return vscore(b)-vscore(a)});
   var sel=$('#voice');sel.innerHTML='';
   var o=document.createElement('option');o.value='g';o.textContent='Standard voice (same in every browser)';sel.appendChild(o);

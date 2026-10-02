@@ -109,6 +109,7 @@ a.cite-btn:hover{background:#9a2c2c;transform:scale(1.1)}
 .chap-p.hl{background:rgba(122,28,28,.08);border-left:3px solid var(--crimson);padding:6px 10px 6px 0;margin-left:-3px;border-radius:0 2px 2px 0}
 .chap-p.hl .chap-txt{font-weight:500}
 .chap-p.hl .chap-ref{color:var(--crimson)}
+.ref-link{color:inherit;text-decoration:underline dotted;text-underline-offset:3px;cursor:pointer}.ref-link:hover{color:#b8862b}
 </style>
 </head>
 <body>
@@ -213,6 +214,14 @@ function loadTopic(i){
   tc.style.display='block';
   tc.innerHTML='<span class="topic-num-label">TOPIC '+t.num+' OF 47</span>'+
     '<h2 class="topic-title">'+t.title+'</h2><ol>'+t.html+'</ol>';
+  tc.querySelectorAll('a.cite-btn').forEach(b=>{  /* the reference number before each § opens that paragraph in The Urantia Book Online */
+    const r=b.dataset.ref, prev=b.previousSibling;
+    if(prev&&prev.nodeType===3&&prev.nodeValue.endsWith(r)){
+      prev.nodeValue=prev.nodeValue.slice(0,-r.length);
+      const a=document.createElement('a');a.className='ref-link';a.href='../../book/#'+r;a.target='_blank';a.rel='noopener';a.textContent=r;a.title='Read '+r+' in The Urantia Book Online';
+      b.parentNode.insertBefore(a,b);
+    }
+  });
   tc.querySelectorAll('a.cite-btn').forEach(b=>{
     b.addEventListener('click',function(e){e.preventDefault();openPara(this.dataset.ref);});
   });
